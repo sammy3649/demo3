@@ -1,22 +1,18 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Catalog;
-import com.example.demo.repository.CatalogRepository;
 import com.example.demo.service.CatalogService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/catalog")
+@AllArgsConstructor
 public class CatalogController {
-    private final CatalogRepository catalogRepository;
-    private final CatalogService catalogService;
 
-    public CatalogController(CatalogRepository catalogRepository, CatalogService catalogService) {
-        this.catalogRepository = catalogRepository;
-        this.catalogService = catalogService;
-    }
+    private final CatalogService catalogService;
 
     @PostMapping
     public Catalog createCatalog(@RequestBody Catalog catalog) {

@@ -11,15 +11,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CatalogServiceImpl implements CatalogService {
-    private final MongoTemplate mongoTemplate;
+//    private final MongoTemplate mongoTemplate;
     private final CatalogRepository catalogRepository;
     private static final String SOURCE_URL = "http://127.0.0.1:8080/";
     private static final Logger log = LoggerFactory.getLogger(CatalogServiceImpl.class);
 
     @Autowired
-    public CatalogServiceImpl(CatalogRepository catalogRepository, MongoTemplate mongoTemplate) {
+    public CatalogServiceImpl(CatalogRepository catalogRepository) {
         this.catalogRepository = catalogRepository;
-        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
