@@ -10,9 +10,11 @@ public interface ProductService {
 
     Product getProductByName(String name);
 
-    Product getProduct(Long id);
+  //  Product getProduct(Long id);
 
-    Product deleteProduct(Long id);
+    Product getProduct(Integer id);
+
+    Product deleteProduct(Integer id);
 
     Product deleteProductByName(String name);
 
@@ -20,5 +22,5 @@ public interface ProductService {
 
     List<Product> findProductByCategory(Category category);
 
-    List<String> getProductNameStartWith();
+    List<String> getProductNameStartWith(String letter);
 }

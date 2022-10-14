@@ -35,13 +35,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getCategory(Long id) {
+    public Category getCategory(Integer id) {
         log.info("Was invoked method for get category in catalog {}", id);
         return categoryRepository.findById(id).get();
     }
 
     @Override
-    public Category deleteCategory(Long id) {
+    public Category deleteCategory(Integer id) {
         log.info("Was invoked method for delete category in catalog {}", id);
         categoryRepository.deleteCategoryById(id);
         return null;

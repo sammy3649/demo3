@@ -23,7 +23,7 @@ public class CategoryController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable long id) {
+    public ResponseEntity<Category> getCategory(@PathVariable Integer id) {
         Category category = categoryService.getCategory(id);
         if (category == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -43,7 +43,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Category> deleteCategory(@PathVariable long id) {
+    public ResponseEntity<Category> deleteCategory(@PathVariable Integer id) {
         Category deleteCategory = categoryService.deleteCategory(id);
         if (deleteCategory == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

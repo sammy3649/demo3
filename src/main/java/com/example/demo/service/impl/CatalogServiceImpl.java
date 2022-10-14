@@ -6,18 +6,20 @@ import com.example.demo.service.CatalogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CatalogServiceImpl implements CatalogService {
-
+    private final MongoTemplate mongoTemplate;
     private final CatalogRepository catalogRepository;
     private static final String SOURCE_URL = "http://127.0.0.1:8080/";
     private static final Logger log = LoggerFactory.getLogger(CatalogServiceImpl.class);
 
     @Autowired
-    public CatalogServiceImpl(CatalogRepository catalogRepository) {
+    public CatalogServiceImpl(CatalogRepository catalogRepository, MongoTemplate mongoTemplate) {
         this.catalogRepository = catalogRepository;
+        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -27,13 +29,13 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public Catalog getCatalog(Long id) {
+    public Catalog getCatalog(Integer id) {
         log.info("Was invoked method to get catalog {}", id);
         return catalogRepository.findById(id).get();
     }
 
     @Override
-    public Catalog deleteCatalog(Long id) {
+    public Catalog deleteCatalog(Integer id) {
         log.info("Was invoked method for delete catalog {}", id);
         catalogRepository.deleteById(id);
         return null;

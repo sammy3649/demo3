@@ -24,7 +24,7 @@ public class CatalogController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Catalog> getCatalog(@PathVariable Long id) {
+    public ResponseEntity<Catalog> getCatalog(@PathVariable Integer id) {
         Catalog catalog = catalogService.getCatalog(id);
         if (catalog == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -44,7 +44,7 @@ public class CatalogController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Catalog> deleteCatalog(@PathVariable Long id) {
+    public ResponseEntity<Catalog> deleteCatalog(@PathVariable Integer id) {
         Catalog deleteCatalog = catalogService.deleteCatalog(id);
         if (deleteCatalog == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

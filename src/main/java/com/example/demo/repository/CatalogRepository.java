@@ -9,11 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CatalogRepository extends MongoRepository<Catalog, Long> {
+public interface CatalogRepository extends MongoRepository<Catalog, Integer> {
+
     @Query("{'name' : {$regex: ?0, $options: 'i'}}")
     Catalog findByName(String name);
 
-    void deleteById(Long id);
+    void deleteById(Integer id);
 
-    Optional<Catalog> findById(Long id);
+    Optional<Catalog> findById(Integer id);
 }

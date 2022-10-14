@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends MongoRepository<Product,Long> {
+public interface ProductRepository extends MongoRepository<Product,Integer> {
     @Query("{'name' : {$regex: ?0, $options: 'i'}}")
     Product findProductByName(String name);
 
-    Optional<Product> findProductById(Long id);
+   // Product findProductById(Long id);
 
-    List<Product> deleteProductById(Long id);
+    List<Product> deleteProductById(Integer id);
 
     @Query("{'name' : {$regex: ?0, $options: 'i'}}")
     List<Product> deleteProductByName(String name);
-    @Query("{'name' : {$regex: ?0, $options: 'i'}}")
+    @Query("{'category' : {$regex: ?0, $options: 'i'}}")
     List<Product> findProductByCategory(Category category);
 
 

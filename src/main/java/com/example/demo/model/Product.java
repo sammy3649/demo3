@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.Data;
@@ -12,34 +14,36 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Objects;
 
-//@JsonInclude(JsonInclude.Include.NON_NULL)
-//@JsonSerialize(using = ToStringSerializer.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonSerialize(using = ToStringSerializer.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection = "product")
 public class Product {
     @Id
-    private Long id;
-    @Indexed(unique = true)
+    private Integer id;
+  //  @Indexed(unique = true)
     @Field(value = "name")
     private String name;
     @Field(value = "description")
     private String description;
+  //  @JsonIgnore
     private Category category;
 
     public Product() {
     }
 
-    public Product(Long id, String name, String description, Category category) {
+    public Product(Integer id, String name, String description, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.category = category;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

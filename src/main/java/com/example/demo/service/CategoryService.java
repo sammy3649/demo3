@@ -9,9 +9,9 @@ public interface CategoryService {
 
     List<Category> getCategoryByName(String categoryName);
 
-    Category getCategory(Long id);
+    Category getCategory(Integer id);
 
-    Category deleteCategory(Long id);
+    Category deleteCategory(Integer id);
 
     Category deleteCategoryByName(String categoryName);
 

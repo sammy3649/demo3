@@ -5,9 +5,9 @@ import com.example.demo.model.Catalog;
 public interface CatalogService {
     Catalog createCatalog(Catalog catalog);
 
-    Catalog getCatalog(Long id);
+    Catalog getCatalog(Integer id);
 
-    Catalog deleteCatalog(Long id);
+    Catalog deleteCatalog(Integer id);
 
     Catalog updateCatalog(Catalog catalog);
 

@@ -36,13 +36,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProduct(Long id) {
-        log.info("Was invoked method for get  product {}", id);
-        return productRepository.findProductById(id).get();
+    public Product getProduct(Integer id) {
+        log.info("Was invoked method for get product {}", id);
+        return productRepository.findById(id).orElse(null);
     }
 
+
     @Override
-    public Product deleteProduct(Long id) {
+    public Product deleteProduct(Integer id) {
         log.info("Was invoked method for delete  product {}", id);
         productRepository.deleteProductById(id);
         return null;
@@ -68,12 +69,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<String> getProductNameStartWith() {
+    public List<String> getProductNameStartWith(String letter) {
+        return null;
+    }
+
+    //    @Override
+    public List<String> getProductNameStartWith(Character letter) {
         log.info("Was invoked method to get product starting with ");
         return productRepository.findAll().stream().parallel()
                 .map(Product::getName)
                 .map(String::toUpperCase)
-                .filter(a -> a.startsWith("A"))
+                .filter(a -> a.startsWith(String.valueOf(letter)))
                 .sorted()
                 .collect(Collectors.toList());
     }
