@@ -23,19 +23,19 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public Catalog createCatalog(Catalog catalog) {
-        log.info("Was invoked method for create catalog {}", catalog);
+    public Catalog addCatalog(Catalog catalog) {
+        log.info("addCatalog called");
         return catalogRepository.save(catalog);
     }
 
     @Override
-    public Catalog getCatalog(Integer id) {
+    public Catalog getCatalog(Long id) {
         log.info("Was invoked method to get catalog {}", id);
         return catalogRepository.findById(id).get();
     }
 
     @Override
-    public Catalog deleteCatalog(Integer id) {
+    public Catalog deleteCatalog(Long id) {
         log.info("Was invoked method for delete catalog {}", id);
         catalogRepository.deleteById(id);
         return null;

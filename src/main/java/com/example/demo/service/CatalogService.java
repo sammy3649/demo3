@@ -3,11 +3,13 @@ package com.example.demo.service;
 import com.example.demo.model.Catalog;
 
 public interface CatalogService {
-    Catalog createCatalog(Catalog catalog);
+ //   Catalog createCatalog(Catalog catalog);
 
-    Catalog getCatalog(Integer id);
+    Catalog addCatalog(Catalog catalog);
 
-    Catalog deleteCatalog(Integer id);
+    Catalog getCatalog(Long id);
+
+    Catalog deleteCatalog(Long id);
 
     Catalog updateCatalog(Catalog catalog);
 

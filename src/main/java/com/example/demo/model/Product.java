@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import lombok.Data;
+import lombok.*;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.ser.std.ToStringSerializer;
 import org.springframework.data.annotation.Id;
@@ -17,80 +17,23 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonSerialize(using = ToStringSerializer.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 @Document(collection = "product")
 public class Product {
     @Id
     private Integer id;
-  //  @Indexed(unique = true)
+    //  @Indexed(unique = true)
     @Field(value = "name")
     private String name;
     @Field(value = "description")
     private String description;
-  //  @JsonIgnore
+    @JsonIgnore
+    @Field(value = "category")
     private Category category;
 
-    public Product() {
-    }
 
-    public Product(Integer id, String name, String description, Category category) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.category = category;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", category=" + category +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(category, product.category);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, category);
-    }
 }
