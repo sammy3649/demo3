@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Category;
+import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +14,24 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
     private final CategoryService categoryService;
+    private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
 
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, CategoryRepository categoryRepository, ProductRepository productRepository) {
         this.categoryService = categoryService;
+        this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
     }
 
     @PostMapping
-    public Category createCategory(@RequestBody Category category) {
-        return categoryService.createCategory(category);
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+        categoryRepository.save(category);
+        productRepository.saveAll(category.getProducts());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable Integer id) {
+    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
         Category category = categoryService.getCategory(id);
         if (category == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -43,7 +51,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Category> deleteCategory(@PathVariable Integer id) {
+    public ResponseEntity<Category> deleteCategory(@PathVariable Long id) {
         Category deleteCategory = categoryService.deleteCategory(id);
         if (deleteCategory == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -51,13 +59,10 @@ public class CategoryController {
         return ResponseEntity.ok(deleteCategory);
     }
 
-    @DeleteMapping("{categoryName}")
-    public ResponseEntity<Category> deleteCategoryByNAme(@PathVariable String categoryName) {
-        Category deleteCategoryByName = categoryService.deleteCategoryByName(categoryName);
-        if (deleteCategoryByName == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(deleteCategoryByName);
+    @DeleteMapping(params = {"name"})
+    public Category deleteByName(
+            @RequestParam(required = false) String categoryName) {
+        return categoryService.deleteCategoryByName(categoryName);
     }
 
     @GetMapping(params = {"categoryName"})
@@ -65,9 +70,14 @@ public class CategoryController {
         return categoryService.findByCategoryName(categoryName);
     }
 
-    @GetMapping("/startwitha")
-    public List<String> getCategoryNameStartWithA() {
-        return categoryService.getCategoryNameStartWith();
+    @GetMapping("/startwith")
+    public List<String> getCategoryNameStartWithA(String letter) {
+        return categoryService.getCategoryNameStartWith(letter);
+    }
+
+    @GetMapping("/allcategories")
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
     }
 }
 

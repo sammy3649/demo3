@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Attribute;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
@@ -28,20 +29,20 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Integer id) {
+    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
         Product product = productService.getProduct(id);
         return getResponse(product);
     }
 
-   // @GetMapping("{name}")
+    // @GetMapping("{name}")
     //public ResponseEntity<Product> getProductByName(@PathVariable String name) {
-     //   Product productByName = productService.getProductByName(name);
-     //   if (productByName == null) {
-     //       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-     //   }
-     //   return ResponseEntity.ok(productByName);
+    //   Product productByName = productService.getProductByName(name);
+    //   if (productByName == null) {
+    //       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    //   }
+    //   return ResponseEntity.ok(productByName);
 
-  //  }
+    //  }
 
     @PutMapping
     public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
@@ -54,7 +55,7 @@ public class ProductController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable Integer id) {
+    public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
         Product deleteProduct = productService.deleteProduct(id);
         if (deleteProduct == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -62,13 +63,9 @@ public class ProductController {
         return ResponseEntity.ok(deleteProduct);
     }
 
-    @DeleteMapping("{name}")
-    public ResponseEntity<Product> deleteProductByName(@PathVariable String name) {
-        Product deleteByName = productService.deleteProductByName(name);
-        if (deleteByName == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(deleteByName);
+    @DeleteMapping(params = {"name"})
+    public Product deleteByName(String name) {
+        return productService.deleteProductByName(name);
     }
 
     @GetMapping(params = {"categoryName"})
@@ -86,10 +83,21 @@ public class ProductController {
         return productRepository.findAll();
     }
 
+    @PostMapping("/{id}/add-attribute")
+    public ResponseEntity<Product> updateNewProduct(@PathVariable Long id, @RequestBody Attribute attribute) {
+        Product putNewProduct = productService.updateProductWithNewAttribute(id, attribute);
+        if (putNewProduct == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(putNewProduct);
+    }
+
+
     private ResponseEntity<Product> getResponse(Product product) {
         if (product == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(product);
     }
+
 }

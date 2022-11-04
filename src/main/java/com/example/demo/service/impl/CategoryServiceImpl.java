@@ -35,13 +35,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getCategory(Integer id) {
+    public Category getCategory(Long id) {
         log.info("Was invoked method for get category in catalog {}", id);
         return categoryRepository.findById(id).get();
     }
 
     @Override
-    public Category deleteCategory(Integer id) {
+    public Category deleteCategory(Long id) {
         log.info("Was invoked method for delete category in catalog {}", id);
         categoryRepository.deleteCategoryById(id);
         return null;
@@ -67,13 +67,21 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<String> getCategoryNameStartWith() {
+    public List<String> getCategoryNameStartWith(String letter) {
         log.info("Was invoked method to get category starting with ");
         return categoryRepository.findAll().stream().parallel()
                 .map(Category::getCategoryName)
                 .map(String::toUpperCase)
-                .filter(a -> a.startsWith("A"))
+                .filter(a -> a.startsWith(String.valueOf(letter)))
                 .sorted()
                 .collect(Collectors.toList());
     }
+    //@Override
+    //public void getParentAttributes() {
+      //  Field[] categoryFields = Category.class.getSuperclass().getDeclaredFields();
+       // Field[] catalogFields = Category.class.getDeclaredFields();
+        //Field[] allFields = new Field[catalogFields.length + catalogFields.length];
+        //Arrays.setAll(allFields, i ->
+          //      (i < catalogFields.length ? categoryFields[i] : categoryFields[i - catalogFields.length]));}
+
 }

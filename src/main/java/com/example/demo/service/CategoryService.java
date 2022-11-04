@@ -9,9 +9,9 @@ public interface CategoryService {
 
     List<Category> getCategoryByName(String categoryName);
 
-    Category getCategory(Integer id);
+    Category getCategory(Long id);
 
-    Category deleteCategory(Integer id);
+    Category deleteCategory(Long id);
 
     Category deleteCategoryByName(String categoryName);
 
@@ -19,5 +19,7 @@ public interface CategoryService {
 
     List<Category> findByCategoryName(String categoryName);
 
-    List<String> getCategoryNameStartWith();
+    List<String> getCategoryNameStartWith(String letter);
+
+    // void getParentAttributes();
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Attribute;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 
@@ -12,9 +13,9 @@ public interface ProductService {
 
   //  Product getProduct(Long id);
 
-    Product getProduct(Integer id);
+    Product getProduct(Long id);
 
-    Product deleteProduct(Integer id);
+    Product deleteProduct(Long id);
 
     Product deleteProductByName(String name);
 
@@ -23,4 +24,8 @@ public interface ProductService {
     List<Product> findProductByCategory(Category category);
 
     List<String> getProductNameStartWith(String letter);
+
+    List<String> getProductNameStartWith(Character letter);
+
+    Product updateProductWithNewAttribute(Long id, Attribute attribute);
 }
