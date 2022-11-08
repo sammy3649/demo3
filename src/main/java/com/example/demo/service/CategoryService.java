@@ -24,5 +24,7 @@ public interface CategoryService {
 
     Category updateCategoryWithNewAttribute(Long id, Attribute attribute);
 
+    Category deleteAttributeInCategory(Long categoryId, Attribute attribute);
+
     // void getParentAttributes();
 }

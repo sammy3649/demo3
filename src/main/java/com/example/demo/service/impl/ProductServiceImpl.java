@@ -20,16 +20,16 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final AttributeRepository attributeRepository;
-    private final AttributeService attributeServicel;
+    private final AttributeService attributeService;
 
     private static final String SOURCE_URL = "http://127.0.0.1:8080/";
     private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, AttributeRepository attributeRepository, AttributeService attributeServicel) {
+    public ProductServiceImpl(ProductRepository productRepository, AttributeRepository attributeRepository, AttributeService attributeService) {
         this.productRepository = productRepository;
         this.attributeRepository = attributeRepository;
-        this.attributeServicel = attributeServicel;
+        this.attributeService = attributeService;
     }
 
     @Override
@@ -39,22 +39,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductByName(String name) {
+    public List<Product> getProductByName(String name) {
         log.info("Was invoked method for get product {}", name);
         return productRepository.findProductByName(name);
     }
 
     @Override
-    public Product getProduct(Long id) {
-        log.info("Was invoked method for get product {}", id);
-        return productRepository.findById(id).orElse(null);
+    public Product getProduct(Long productId) {
+        log.info("Was invoked method for get product {}", productId);
+        return productRepository.findById(productId).orElse(null);
     }
 
 
     @Override
-    public Product deleteProduct(Long id) {
-        log.info("Was invoked method for delete  product {}", id);
-        productRepository.deleteProductById(id);
+    public Product deleteProduct(Long productId) {
+        log.info("Was invoked method for delete  product {}", productId);
+        productRepository.deleteProductByProductId(productId);
         return null;
     }
 
@@ -89,21 +89,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProductWithNewAttribute(Long id, Attribute attribute) {
-        Product product = getProduct(id);
+    public Product updateProductWithNewAttribute(Long productId, Attribute attribute) {
+        Product product = getProduct(productId);
         if (product.getAttribute() == null) {
             product.setAttribute(new ArrayList<>());
         }
         product.getAttribute().add(attribute);
         return productRepository.save(product);
     }
+
     @Override
-    public Product deleteAttributeInProduct(Long id, Attribute attribute) {
-        Product product = getProduct(id);
-        if (product.getAttribute() == null) {
-            throw new RuntimeException("Not found");
+    public Product deleteAttributeInProduct(Long productId, Attribute attribute) {
+        Product product = getProduct(productId);
+        if (product.getAttribute() != null) {
+            product.getAttribute().removeIf(atr -> atr.getAttrId().equals(attribute.getAttrId()));
         }
-        product.getAttribute().remove(attribute);
         return productRepository.save(product);
     }
 

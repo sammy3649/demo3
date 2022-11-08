@@ -15,10 +15,10 @@ import java.util.List;
 @Setter
 //@JsonIgnoreProperties
 @Document(collection = "product")
-public class Product  {
+public class Product {
 
     @Id
-    private Long id;
+    private Long productId;
     @Field(value = "name")
     private String name;
     @Field(value = "description")

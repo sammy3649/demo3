@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Attribute;
 import com.example.demo.model.Category;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
@@ -30,9 +31,9 @@ public class CategoryController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
-        Category category = categoryService.getCategory(id);
+    @GetMapping("{categoryId}")
+    public ResponseEntity<Category> getCategory(@PathVariable Long categoryId) {
+        Category category = categoryService.getCategory(categoryId);
         if (category == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -50,9 +51,9 @@ public class CategoryController {
 
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Category> deleteCategory(@PathVariable Long id) {
-        Category deleteCategory = categoryService.deleteCategory(id);
+    @DeleteMapping("{categoryId}")
+    public ResponseEntity<Category> deleteCategory(@PathVariable Long categoryId) {
+        Category deleteCategory = categoryService.deleteCategory(categoryId);
         if (deleteCategory == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -78,6 +79,24 @@ public class CategoryController {
     @GetMapping("/allcategories")
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
+    }
+
+    @PostMapping("/{categoryId}/add-attribute")
+    public ResponseEntity<Category> updateNewCategory(@PathVariable Long categoryId, @RequestBody Attribute attribute) {
+        Category putNewCategory = categoryService.updateCategoryWithNewAttribute(categoryId, attribute);
+        if (putNewCategory == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(putNewCategory);
+    }
+
+    @DeleteMapping("/{categoryId}/delete-attribute")
+    public ResponseEntity<Category> removeAttributeInCategory(@PathVariable Long categoryId, @RequestBody Attribute attribute) {
+        Category deletedCategory = categoryService.deleteAttributeInCategory(categoryId, attribute);
+        if (deletedCategory == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(deletedCategory);
     }
 }
 

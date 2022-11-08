@@ -14,9 +14,9 @@ public interface CatalogRepository extends MongoRepository<Catalog, Long> {
     @Query("{'name' : {$regex: ?0, $options: 'i'}}")
     Catalog findByName(String name);
 
-    void deleteById(Long id);
+    void deleteByCatalogId(Long catalogId);
 
-    Optional<Catalog> findById(Long id);
+    Optional<Catalog> findByCatalogId(Long catalogId);
 
     void deleteCatalogByName(String name);
 }

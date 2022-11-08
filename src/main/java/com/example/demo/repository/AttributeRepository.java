@@ -18,10 +18,10 @@ public interface AttributeRepository extends MongoRepository<Attribute, String> 
     @Query("{'name' : {$regex: ?0, $options: 'i'}}")
     Attribute findByName(String name);
 
-    Optional<Attribute> findById(Long id);
+    Optional<Attribute> findByAttrId(Long attrId);
 
-    List<Attribute> deleteById(Long id);
+    List<Attribute> deleteByAttrId(Long attrId);
 
-    List<Attribute> getById(Long id);
+    List<Attribute> getByAttrId(Long attrId);
 
 }

@@ -9,11 +9,11 @@ import java.util.List;
 public interface ProductService {
     Product createProduct(Product product);
 
-    Product getProductByName(String name);
+    List<Product> getProductByName(String name);
 
-    Product getProduct(Long id);
+    Product getProduct(Long productId);
 
-    Product deleteProduct(Long id);
+    Product deleteProduct(Long productId);
 
     Product deleteProductByName(String name);
 
@@ -23,7 +23,7 @@ public interface ProductService {
 
     List<String> getProductNameStartWith(String letter);
 
-    Product updateProductWithNewAttribute(Long id, Attribute attribute);
+    Product updateProductWithNewAttribute(Long productId, Attribute attribute);
 
-    Product deleteAttributeInProduct(Long id, Attribute attribute);
+    Product deleteAttributeInProduct(Long productId, Attribute attribute);
 }

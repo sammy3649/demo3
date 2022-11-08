@@ -10,9 +10,9 @@ import java.util.List;
 public interface CatalogService {
     Catalog createCatalog(Catalog catalog);
 
-    Catalog getCatalog(Long id);
+    Catalog getCatalog(Long catalogId);
 
-    Catalog deleteCatalog(Long id);
+    Catalog deleteCatalog(Long catalogId);
 
     Catalog deleteCatalogByName(String name);
 
@@ -24,5 +24,7 @@ public interface CatalogService {
 
     List<String> getProductNameStartWith(String letter);
 
-    Catalog updateCatalogWithNewAttribute(Long id, Attribute attribute);
+    Catalog updateCatalogWithNewAttribute(Long catalogId, Attribute attribute);
+
+    Catalog deleteAttributeInCatalog(Long catalogId, Attribute attribute);
 }

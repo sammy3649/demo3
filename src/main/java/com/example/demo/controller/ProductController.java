@@ -28,21 +28,16 @@ public class ProductController {
         return ResponseEntity.ok(newProduct);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        Product product = productService.getProduct(id);
+    @GetMapping("{productId}")
+    public ResponseEntity<Product> getProduct(@PathVariable Long productId) {
+        Product product = productService.getProduct(productId);
         return getResponse(product);
     }
 
-    // @GetMapping("{name}")
-    //public ResponseEntity<Product> getProductByName(@PathVariable String name) {
-    //   Product productByName = productService.getProductByName(name);
-    //   if (productByName == null) {
-    //       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    //   }
-    //   return ResponseEntity.ok(productByName);
-
-    //  }
+    @GetMapping(params = {"name"})
+    public List<Product> findByProductName(@RequestParam(required = false) String name) {
+        return productService.getProductByName(name);
+    }
 
     @PutMapping
     public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
@@ -54,9 +49,9 @@ public class ProductController {
 
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
-        Product deleteProduct = productService.deleteProduct(id);
+    @DeleteMapping("{productId}")
+    public ResponseEntity<Product> deleteProduct(@PathVariable Long productId) {
+        Product deleteProduct = productService.deleteProduct(productId);
         if (deleteProduct == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -83,21 +78,22 @@ public class ProductController {
         return productRepository.findAll();
     }
 
-    @PostMapping("/{id}/add-attribute")
-    public ResponseEntity<Product> updateNewProduct(@PathVariable Long id, @RequestBody Attribute attribute) {
-        Product putNewProduct = productService.updateProductWithNewAttribute(id, attribute);
+    @PostMapping("/{productId}/add-attribute")
+    public ResponseEntity<Product> updateNewProduct(@PathVariable Long productId, @RequestBody Attribute attribute) {
+        Product putNewProduct = productService.updateProductWithNewAttribute(productId, attribute);
         if (putNewProduct == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(putNewProduct);
     }
-    @DeleteMapping("/{id}/delete-attribute")
-    public ResponseEntity<Product> removeAttributeInProduct(@PathVariable Long id, @RequestBody Attribute attribute) {
-        Product putNewProduct = productService.deleteAttributeInProduct(id, attribute);
-        if (putNewProduct == null) {
+
+    @DeleteMapping("/{productId}/delete-attribute")
+    public ResponseEntity<Product> removeAttributeInProduct(@PathVariable Long productId,@RequestBody Attribute attribute) {
+        Product deletedProduct = productService.deleteAttributeInProduct(productId, attribute);
+        if (deletedProduct == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(putNewProduct);
+        return ResponseEntity.ok(deletedProduct);
     }
 
 

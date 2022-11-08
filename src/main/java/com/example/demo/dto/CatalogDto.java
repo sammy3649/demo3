@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 public class CatalogDto implements Serializable {
-    private final String id;
+    private final String catalogId;
     private final String name;
     private Date creationDate = new Date();
     private List<Category> categories;

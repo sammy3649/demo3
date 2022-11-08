@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Data
 public class ProductDto implements Serializable {
-    private Long id;
+    private Long productId;
     private String name;
     private String description;
     private Category category;

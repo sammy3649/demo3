@@ -37,15 +37,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getCategory(Long id) {
-        log.info("Was invoked method for get category in catalog {}", id);
-        return categoryRepository.findById(id).get();
+    public Category getCategory(Long categoryId) {
+        log.info("Was invoked method for get category in catalog {}", categoryId);
+        return categoryRepository.findByCategoryId(categoryId).get();
     }
 
     @Override
-    public Category deleteCategory(Long id) {
-        log.info("Was invoked method for delete category in catalog {}", id);
-        categoryRepository.deleteCategoryById(id);
+    public Category deleteCategory(Long categoryId) {
+        log.info("Was invoked method for delete category in catalog {}", categoryId);
+        categoryRepository.deleteCategoryByCategoryId(categoryId);
         return null;
     }
 
@@ -78,21 +78,32 @@ public class CategoryServiceImpl implements CategoryService {
                 .sorted()
                 .collect(Collectors.toList());
     }
+
     @Override
-    public Category updateCategoryWithNewAttribute(Long id, Attribute attribute) {
-        Category category = getCategory(id);
+    public Category updateCategoryWithNewAttribute(Long categoryId, Attribute attribute) {
+        Category category = getCategory(categoryId);
         if (category.getAttribute() == null) {
             category.setAttribute(new ArrayList<>());
         }
         category.getAttribute().add(attribute);
         return categoryRepository.save(category);
     }
+
+    @Override
+    public Category deleteAttributeInCategory(Long categoryId, Attribute attribute) {
+        Category category = getCategory(categoryId);
+        if (category.getAttribute() != null) {
+            category.getAttribute().removeIf(atr -> atr.getAttrId().equals(attribute.getAttrId()));
+        }
+        return categoryRepository.save(category);
+    }
+
     //@Override
     //public void getParentAttributes() {
-      //  Field[] categoryFields = Category.class.getSuperclass().getDeclaredFields();
-       // Field[] catalogFields = Category.class.getDeclaredFields();
-        //Field[] allFields = new Field[catalogFields.length + catalogFields.length];
-        //Arrays.setAll(allFields, i ->
-          //      (i < catalogFields.length ? categoryFields[i] : categoryFields[i - catalogFields.length]));}
+    //  Field[] categoryFields = Category.class.getSuperclass().getDeclaredFields();
+    // Field[] catalogFields = Category.class.getDeclaredFields();
+    //Field[] allFields = new Field[catalogFields.length + catalogFields.length];
+    //Arrays.setAll(allFields, i ->
+    //      (i < catalogFields.length ? categoryFields[i] : categoryFields[i - catalogFields.length]));}
 
 }

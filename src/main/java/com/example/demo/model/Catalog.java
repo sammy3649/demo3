@@ -29,7 +29,7 @@ public class Catalog {
 
     @Id
     @Field("_id")
-    private Long id;
+    private Long catalogId;
 
     @Field(value = "name")
     private String name;

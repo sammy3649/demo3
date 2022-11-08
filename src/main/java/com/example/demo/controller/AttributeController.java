@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Attribute;
-import com.example.demo.model.Product;
 import com.example.demo.repository.AttributeRepository;
 import com.example.demo.service.AttributeService;
 import org.springframework.http.HttpStatus;
@@ -27,9 +26,9 @@ public class AttributeController {
         return ResponseEntity.ok(newAttribute);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Attribute> getAttribute(@PathVariable Long id) {
-        Attribute attribute = attributeService.getAttribute(id);
+    @GetMapping("{attrId}")
+    public ResponseEntity<Attribute> getAttribute(@PathVariable Long attrId) {
+        Attribute attribute = attributeService.getAttribute(attrId);
         return ResponseEntity.ok(attribute);
     }
 
@@ -53,9 +52,9 @@ public class AttributeController {
 
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Attribute> deleteAttribute(@PathVariable Long id) {
-        Attribute deleteAttribute = attributeService.deleteAttribute(id);
+    @DeleteMapping("{attrId}")
+    public ResponseEntity<Attribute> deleteAttribute(@PathVariable Long attrId) {
+        Attribute deleteAttribute = attributeService.deleteAttribute(attrId);
         if (deleteAttribute == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

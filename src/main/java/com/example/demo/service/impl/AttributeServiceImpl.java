@@ -16,6 +16,7 @@ public class AttributeServiceImpl implements AttributeService {
     public AttributeServiceImpl(AttributeRepository attributeRepository) {
         this.attributeRepository = attributeRepository;
     }
+
     @Override
     public Attribute createAttribute(Attribute attribute) {
         log.info("Was invoked method for create catalog {}", attribute);
@@ -23,17 +24,18 @@ public class AttributeServiceImpl implements AttributeService {
     }
 
     @Override
-    public Attribute getAttribute(Long id) {
-        log.info("Was invoked method to get catalog {}", id);
-        return attributeRepository.findById(id).get();
+    public Attribute getAttribute(Long attrId) {
+        log.info("Was invoked method to get catalog {}", attrId);
+        return attributeRepository.findByAttrId(attrId).get();
     }
 
     @Override
-    public Attribute deleteAttribute(Long id) {
-        log.info("Was invoked method for delete catalog {}", id);
-        attributeRepository.deleteById(id);
+    public Attribute deleteAttribute(Long attrId) {
+        log.info("Was invoked method for delete catalog {}", attrId);
+        attributeRepository.deleteByAttrId(attrId);
         return null;
     }
+
     @Override
     public Attribute deleteByName(String name) {
         log.info("Was invoked method for delete catalog {}", name);

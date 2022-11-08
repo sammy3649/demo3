@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class CategoryDto implements Serializable {
+    private final String categoryId;
     private String categoryName;
     private Catalog catalog;
     private List<Product> products;

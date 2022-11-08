@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class CatalogServiceImpl implements CatalogService {
-//    private final MongoTemplate mongoTemplate;
+    //    private final MongoTemplate mongoTemplate;
     private final CatalogRepository catalogRepository;
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
@@ -43,17 +43,18 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public Catalog getCatalog(Long id) {
-        log.info("Was invoked method to get catalog {}", id);
-        return catalogRepository.findById(id).get();
+    public Catalog getCatalog(Long catalogId) {
+        log.info("Was invoked method to get catalog {}", catalogId);
+        return catalogRepository.findByCatalogId(catalogId).get();
     }
 
     @Override
-    public Catalog deleteCatalog(Long id) {
-        log.info("Was invoked method for delete catalog {}", id);
-        catalogRepository.deleteById(id);
+    public Catalog deleteCatalog(Long catalogId) {
+        log.info("Was invoked method for delete catalog {}", catalogId);
+        catalogRepository.deleteByCatalogId(catalogId);
         return null;
     }
+
     @Override
     public Catalog deleteCatalogByName(String name) {
         log.info("Was invoked method for delete catalog {}", name);
@@ -72,15 +73,19 @@ public class CatalogServiceImpl implements CatalogService {
         log.info("Was invoked method to find by name {}", name);
         return catalogRepository.findByName(name);
     }
+
     @ModelAttribute
     public Model addAttributes(Model model) {
-        return model.addAttribute(model);    }
+        return model.addAttribute(model);
+    }
+
     @Override
     public Catalog saveCategoryAndProduct(Product product, Category category) {
         categoryRepository.insert(category);
         productRepository.insert(product);
         return saveCategoryAndProduct(product, category);
     }
+
     @Override
     public List<String> getProductNameStartWith(String letter) {
         log.info("Was invoked method to get product starting with ");
@@ -91,9 +96,10 @@ public class CatalogServiceImpl implements CatalogService {
                 .sorted()
                 .collect(Collectors.toList());
     }
+
     @Override
-    public Catalog updateCatalogWithNewAttribute(Long id, Attribute attribute) {
-        Catalog catalog = getCatalog(id);
+    public Catalog updateCatalogWithNewAttribute(Long catalogId, Attribute attribute) {
+        Catalog catalog = getCatalog(catalogId);
         if (catalog.getAttribute() == null) {
             catalog.setAttribute(new ArrayList<>());
         }
@@ -101,4 +107,13 @@ public class CatalogServiceImpl implements CatalogService {
         return catalogRepository.save(catalog);
     }
 
+    @Override
+    public Catalog deleteAttributeInCatalog(Long catalogId, Attribute attribute) {
+        Catalog catalog = getCatalog(catalogId);
+        if (catalog.getAttribute() != null) {
+            catalog.getAttribute().removeIf(atr -> atr.getAttrId().equals(attribute.getAttrId()));
+        }
+        return catalogRepository.save(catalog);
     }
+
+}

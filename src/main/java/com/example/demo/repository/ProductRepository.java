@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.model.Attribute;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -11,20 +12,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends MongoRepository<Product,Long> {
+public interface ProductRepository extends MongoRepository<Product, Long> {
     @Query("{'name' : {$regex: ?0, $options: 'i'}}")
-    Product findProductByName(String name);
+    List<Product> findProductByName(String name);
 
-   // Product findProductById(Long id);
-
-    List<Product> deleteProductById(Long id);
+    List<Product> deleteProductByProductId(Long productId);
 
     @Query("{'name' : {$regex: ?0, $options: 'i'}}")
     List<Product> deleteProductByName(String name);
+
     @Query("{'category' : {$regex: ?0, $options: 'i'}}")
     List<Product> findProductByCategory(Category category);
-
-    List<Product> getById(Long id);
 
 
 }
