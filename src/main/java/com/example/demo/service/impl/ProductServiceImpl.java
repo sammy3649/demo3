@@ -79,11 +79,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<String> getProductNameStartWith(String letter) {
-        return null;
-    }
-
-    @Override
-    public List<String> getProductNameStartWith(Character letter) {
         log.info("Was invoked method to get product starting with ");
         return productRepository.findAll().stream().parallel()
                 .map(Product::getName)
@@ -100,6 +95,15 @@ public class ProductServiceImpl implements ProductService {
             product.setAttribute(new ArrayList<>());
         }
         product.getAttribute().add(attribute);
+        return productRepository.save(product);
+    }
+    @Override
+    public Product deleteAttributeInProduct(Long id, Attribute attribute) {
+        Product product = getProduct(id);
+        if (product.getAttribute() == null) {
+            throw new RuntimeException("Not found");
+        }
+        product.getAttribute().remove(attribute);
         return productRepository.save(product);
     }
 

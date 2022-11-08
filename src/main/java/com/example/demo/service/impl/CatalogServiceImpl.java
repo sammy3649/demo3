@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.Attribute;
 import com.example.demo.model.Catalog;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,6 +90,15 @@ public class CatalogServiceImpl implements CatalogService {
                 .filter(a -> a.startsWith(String.valueOf(letter)))
                 .sorted()
                 .collect(Collectors.toList());
+    }
+    @Override
+    public Catalog updateCatalogWithNewAttribute(Long id, Attribute attribute) {
+        Catalog catalog = getCatalog(id);
+        if (catalog.getAttribute() == null) {
+            catalog.setAttribute(new ArrayList<>());
+        }
+        catalog.getAttribute().add(attribute);
+        return catalogRepository.save(catalog);
     }
 
     }

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Attribute;
 import com.example.demo.model.Catalog;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
@@ -22,4 +23,6 @@ public interface CatalogService {
     Catalog saveCategoryAndProduct(Product product, Category category);
 
     List<String> getProductNameStartWith(String letter);
+
+    Catalog updateCatalogWithNewAttribute(Long id, Attribute attribute);
 }

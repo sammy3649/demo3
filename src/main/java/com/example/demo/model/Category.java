@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -31,5 +32,7 @@ public class Category  {
     private Integer catalogId;
     @DBRef(db = "product")
     private List<Product> products;
+    @JsonIgnore
+    private List<Attribute> attribute;
 
 }

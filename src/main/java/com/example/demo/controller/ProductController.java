@@ -91,6 +91,14 @@ public class ProductController {
         }
         return ResponseEntity.ok(putNewProduct);
     }
+    @DeleteMapping("/{id}/delete-attribute")
+    public ResponseEntity<Product> removeAttributeInProduct(@PathVariable Long id, @RequestBody Attribute attribute) {
+        Product putNewProduct = productService.deleteAttributeInProduct(id, attribute);
+        if (putNewProduct == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(putNewProduct);
+    }
 
 
     private ResponseEntity<Product> getResponse(Product product) {

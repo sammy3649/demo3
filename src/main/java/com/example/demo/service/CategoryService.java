@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Attribute;
 import com.example.demo.model.Category;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public interface CategoryService {
     List<Category> findByCategoryName(String categoryName);
 
     List<String> getCategoryNameStartWith(String letter);
+
+    Category updateCategoryWithNewAttribute(Long id, Attribute attribute);
 
     // void getParentAttributes();
 }

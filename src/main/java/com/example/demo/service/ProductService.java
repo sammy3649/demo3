@@ -11,8 +11,6 @@ public interface ProductService {
 
     Product getProductByName(String name);
 
-  //  Product getProduct(Long id);
-
     Product getProduct(Long id);
 
     Product deleteProduct(Long id);
@@ -25,7 +23,7 @@ public interface ProductService {
 
     List<String> getProductNameStartWith(String letter);
 
-    List<String> getProductNameStartWith(Character letter);
-
     Product updateProductWithNewAttribute(Long id, Attribute attribute);
+
+    Product deleteAttributeInProduct(Long id, Attribute attribute);
 }

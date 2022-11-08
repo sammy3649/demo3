@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.Attribute;
 import com.example.demo.model.Category;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.service.CategoryService;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,6 +77,15 @@ public class CategoryServiceImpl implements CategoryService {
                 .filter(a -> a.startsWith(String.valueOf(letter)))
                 .sorted()
                 .collect(Collectors.toList());
+    }
+    @Override
+    public Category updateCategoryWithNewAttribute(Long id, Attribute attribute) {
+        Category category = getCategory(id);
+        if (category.getAttribute() == null) {
+            category.setAttribute(new ArrayList<>());
+        }
+        category.getAttribute().add(attribute);
+        return categoryRepository.save(category);
     }
     //@Override
     //public void getParentAttributes() {
